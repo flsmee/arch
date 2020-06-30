@@ -1,0 +1,136 @@
+body {
+    background-color: #16161a;
+    margin: 0 !important;
+    padding: 0 !important
+}
+
+.header {
+    background-color: #1e1e24;
+    margin: 0 !important;
+    padding: 0 !important
+}
+
+.caption {
+    font-size: 20px;
+    color: #6b6b6b
+}
+
+.caption-highlight {
+    color: #a4a4a4
+}
+
+.title {
+    font-size: 48px;
+    color: #e5e5e5
+}
+
+.subtitle {
+    font-size: 35px;
+    color: #d0d0d0
+}
+
+.subhead {
+    font-size: 35px;
+    color: #a4a4a4
+}
+
+.head {
+    font-size: 25px;
+    color: #a4a4a4
+}
+
+.notsohead {
+    font-size: 23px;
+    color: #a4a4a4;
+    text-decoration: inherit;
+}
+
+.text {
+    font-size: 20px;
+    color: #9a9a9a
+}
+
+.code {
+    font-size: 20px;
+    color: #9a9a9a;
+    background-color: #1e1e24;
+    padding: 13px;
+    border-radius: 10px;
+}
+
+.linko {
+    color: #6d6d93;
+    text-decoration: none;
+    transition: .1s
+}
+
+.linko:hover {
+    color: #424268
+}
+
+.linko:active {
+    color: #4e4e69
+}
+
+.button {
+    background-color: #323245;
+    border: none;
+    color: #a1a1a1;
+    padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    height: 56px;
+    border-radius: 69px;
+    transition: .1s;
+    cursor: pointer
+}
+
+.button:hover {
+    background-color: #191920;
+}
+
+.button:active {
+    background-color: #252533;
+}
+
+@media all and (max-width:640px) {
+    .content {
+        padding-left: 20px !important;
+        padding-bottom: 10px;
+        padding-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center
+    }
+    .button {
+        margin-bottom: 10px
+    }
+}
+
+@media all and (min-width:640px) {
+    .content {
+        padding-left: 38px !important;
+        padding-bottom: 10px;
+        padding-top: 20px
+    }
+
+}
+
+@font-face {
+    font-family: jetbrains mono;
+    src: url(https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/web/eot/JetBrainsMono-Regular.eot) format('embedded-opentype'), url(https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/web/woff2/JetBrainsMono-Regular.woff2) format('woff2'), url(https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/web/woff/JetBrainsMono-Regular.woff) format('woff'), url(https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/ttf/JetBrainsMono-Regular.ttf) format('truetype');
+    font-weight: 400;
+    font-style: normal
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: jetbrains mono;
+    color: #fff
+}

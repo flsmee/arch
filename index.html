@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ARCH LINUX</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+</body>
+<div class="header">
+
+    <div class="content" >
+<br>
+<br>
+        <h1 style="margin-top: -20px;" class="title">Arch Linux</h1>
+        <h1 style="margin-top: -20px;" class="head">Installation Instructions</h1>
+        <h1 style="margin-top: -10px;" class="text">Forked from <a class="linko" href="https://d3s0x.github.io/arch-installation/">D3SOX</a></h1>
+        <a href="bugs.html"><button class="buttono" >Known Bugs & Fixes</button></a>
+        <br><br>
+
+    </div>
+
+</div>
+
+<div class="content" style="margin-top: 30px;">
+    <h2 style="margin-top: -20px; margin-bottom: -10px;" class="subhead">1. Live setup</h2>
+    <p class="text" style="margin-right: 30px !important">Ich setze schonmal vorraus, dass du bereits in der archiso bist.</p>
+
+    <h2 style="margin-top: 5px; margin-bottom: -10px;" class="head">Keyboard Layout</h2>
+    <p class="text" style="margin-right: 30px !important">Mit diesem Befehl, kannst du dein Keyboard Layout setzen (ersetz "yourkeymap" mit deinem Layout z.B. de-latin1)</p>
+      <p class="code" style="margin-right: 30px !important">loadkeys yourkeymap</p>
+
+<h2 style="margin-top: 5px; margin-bottom: -10px;" class="head">📶 WiFi verbinden</h2>
+<p class="text" style="margin-right: 30px !important">Dieser Befehl hilft dir, dich zu deinem WiFi zu verbinden.</p>
+  <p class="code" style="margin-right: 30px !important">wifi-menu</p>
+
+<h2 style="margin-top: 5px; margin-bottom: -10px;" class="head">Internetverbindung testen</h2>
+<p class="text" style="margin-right: 30px !important">Hiermit kannst du deine Verbindung testen.</p>
+  <p class="code" style="margin-right: 30px !important">ping -c 3 archlinux.org</p>
+
+  <h2 style="margin-top: 5px; margin-bottom: -10px;" class="head">BIOS or UEFI</h2>
+  <p class="text" style="margin-right: 30px !important">Falls dieser Ordner nicht existiert, dann hast du warscheinlich BIOS gebootet. Da UEFI besser ist, überprüfe mehrfach, ob du UEFI unterstützt, da du es willst.</p>
+    <p class="code" style="margin-right: 30px !important">ls /sys/firmware/efi/efivars</p>
+
+</div>
+
+<div class="content" style="margin-top: 30px;">
+    <h2 style="margin-top: -20px; margin-bottom: -10px;" class="subhead">2. Festplattenpartitionierung</h2>
+    <p class="text" style="margin-right: 30px !important">Hier ist /dev/sdXY oder ein /dev/sdX ein Platzhalter. Du musst herausfinden, auf welcher Festplatte Arch Linux installiert werden soll, und dann /dev/sdXY oder /dev/sdX mit dieser ersetzen (z.B. /dev/sda oder /dev/sda1)</p>
+
+<h2 style="margin-top: 5px;" class="subhead">Partitionierung</h2>
+
+    <h2 style="margin-top: 5px; margin-bottom: -10px;" class="head">Alle Festplatten auflisten</h2>
+    <p class="text" style="margin-right: 30px !important">Um einen Überblick über deine Festplatten zu bekommen, kannst du einfach diesen Befehl ausführen:</p>
+      <p class="code" style="margin-right: 30px !important">fdisk -l</p>
+
+          <h2 style="margin-top: 5px; margin-bottom: -10px;" class="head">Partitionierungswerkzeug</h2>
+          <p class="text" style="margin-right: 30px !important">▶️ Text-based</p>
+            <p class="code" style="margin-right: 30px !important">fdisk /dev/sdX</p>
+            <p class="text" style="margin-right: 30px !important">▶️ Text-based (nur auf UEFI)</p>
+              <p class="code" style="margin-right: 30px !important">gdisk /dev/sdX</p>
+              <p class="text" style="margin-right: 30px !important">▶️ Graphical (Empfohlen)</p>
+                <p class="code" style="margin-right: 30px !important">cfdisk /dev/sdX</p>
+                <p class="text" style="margin-right: 30px !important">▶️ Graphical (nur auf UEFI)</p>
+                  <p class="code" style="margin-right: 30px !important">cgdisk /dev/sdX</p>
+
+                  <h2 style="margin-top: 35px; margin-bottom: -10px;" class="head">Partitionen erstellen</h2>
+                  <p class="text" style="margin-right: 30px !important">UEFI ▶️ Du musst GPT benutzen</p>
+                  <p class="text" style="margin-top: -20px; margin-bottom: 10px; margin-right: 30px !important">BIOS ▶️ Du kannst zwischen DOS und GPT entscheiden.</p>
+
+                  <p class="text" style="margin-right: 30px !important"><b>GPT (UEFI)</b></p>
+                  <table>
+
+                  <tr>
+                   <th scope="col">Notwendig? |</th>
+                   <th scope="col">Partition |</th>
+                   <th scope="col">Part. Type </th>
+                   <th scope="col">Mount Point</th>
+                  </tr>
+                  <tr>
+                   <td>✔️</td>
+                   <td>/dev/sdXY</td>
+                   <td>EFI system partition</td>
+                   <td>/mnt/boot/efi</td>
+                  </tr>
+                  <tr>
+                   <td>❌</td>
+                   <td>/dev/sdXY</td>
+                   <td>Linux swap</td>
+                   <td>-</td>
+                  </tr>
+                  <tr>
+                   <td>✔️</td>
+                   <td>/dev/sdXY</td>
+                   <td>Linux (ext4)</td>
+                   <td>/mnt</td>
+                  </tr>
+                  <tr>
+                   <td>❌</td>
+                   <td>/dev/sdXY</td>
+                   <td>Linux (ext4)</td>
+                   <td>/mnt/home</td>
+                  </tr>
+                  </table>
+
+                  <p class="text" style="margin-right: 30px !important"><b>DOS/MBR (BIOS)</b></p>
+                  <table>
+
+                  <tr>
+                   <th scope="col">Notwendig? |</th>
+                   <th scope="col">Partition |</th>
+                   <th scope="col">Part. Type </th>
+                   <th scope="col">Mount Point</th>
+                   <th scope="col">Flags</th>
+                  </tr>
+                  <tr>
+                   <td>❌</td>
+                   <td>/dev/sdXY</td>
+                   <td>Linux swap</td>
+                   <td>-</td>
+                   <td>-</td>
+                  </tr>
+                  <tr>
+                   <td>✔️</td>
+                   <td>/dev/sdXY</td>
+                   <td>Linux (ext4)</td>
+                   <td>/mnt</td>
+                   <td>Bootable</td>
+                  </tr>
+                  <tr>
+                   <td>❌</td>
+                   <td>/dev/sdXY</td>
+                   <td>Linux (ext4)</td>
+                   <td>/mnt/home</td>
+                   <td>-</td>
+                  </tr>
+                  </table>
+
+                  <h2 style="margin-top: 5px;" class="subhead">Formatieren + Mounten</h2>
+                  <h2 style="margin-top: 5px;" class="head">EFI system</h2>
+                  <p class="text" style="margin-right: 30px !important">▶️ UEFI only</p>
+                  <p class="code" style="margin-right: 30px !important">mkfs.fat -F32 -n EFI /dev/sdXY</p>
+                  <p class="code" style="margin-right: 30px !important">mkdir -p /mnt/boot/efi</p>
+                  <p class="code" style="margin-right: 30px !important">mount /dev/sdXY /mnt/boot/efi</p>
+
+                  <h2 style="margin-top: 5px;" class="head">Root Partition</h2>
+                  <p class="text" style="margin-right: 30px !important">💽 Hier wird das komplette System installiert</p>
+                  <p class="code" style="margin-right: 30px !important">mkfs.ext4 -L root /dev/sdXY</p>
+                  <p class="code" style="margin-right: 30px !important">mount /dev/sdXY /mnt</p>
+
+                  <h2 style="margin-top: 5px;" class="head">Home Partition</h2>
+                  <p class="text" style="margin-right: 30px !important">🏠 Falls du eine zweite Home Partition erstellt hast.</p>
+                  <p class="code" style="margin-right: 30px !important">mkfs.ext4 -L home /dev/sdXY</p>
+                  <p class="code" style="margin-right: 30px !important">mkdir /mnt/home</p>
+                  <p class="code" style="margin-right: 30px !important">mount /dev/sdXY /mnt/home</p>
+
+                  <h2 style="margin-top: 5px;" class="head">Swap Partition</h2>
+                  <p class="text" style="margin-right: 30px !important">💤 Es kann vorkommen, dass das komplette RAM voll ist, weil z.B. (sehr) viele Programme gleichzeitig geöffnet sind. An dieser Stelle beginnt der Linux-Kernel, RAM frei zu machen, indem er Teile der im RAM gespeicherten Daten auf die Festplatte schreibt. Werden die Daten wieder benötigt, so werden diese wieder ins RAM geladen und andere im Moment nicht benötigte Daten werden in den Swap geschrieben.</p>
+                  <p class="code" style="margin-right: 30px !important">mkswap -L SWAP /dev/sdXY</p>
+                  <p class="code" style="margin-right: 30px !important">swapon /dev/sdXY</p>
+
+                  <h2 style="margin-top: 30px;" class="subhead">3. Basis Installation</h2>
+                  <h2 style="margin-top: 20px;" class="head">Update die Mirrorlist</h2>
+                  <p class="text" style="margin-right: 30px !important">Das ist aufjedenfall empfehlenswert, damit man nicht über langsame Server laden muss, und man dann auf regionalen Server lädt. Außerdem würde ich empfehlen, United States zu deinem Land zu wechseln (z.B. Germany).</p>
+                  <p class="code" style="margin-right: 30px !important">pacman -Sy archlinux-keyring reflector</p>
+                  <p class="code" style="margin-right: 30px !important">reflector --country 'United States' --age 15 --protocol https --sort rate --save /etc/pacman.d/mirrorlist</p>
+
+                  <h2 style="margin-top: 5px;" class="head">Main Installation</h2>
+                  <p class="text" style="margin-right: 30px !important">⏳ Das installiert jetzt das System und es könnte jetzt etwas dauern.</p>
+                  <p class="code" style="margin-right: 30px !important">pacstrap /mnt base base-devel linux linux-firmware linux-lts sysfsutils usbutils e2fsprogs inetutils netctl nano less which man-db man-pages</p>
+                  <p class="text" style="margin-right: 30px !important">⚠️ Du solltest den Microcode mitinstallieren, um dein System stabiler zu machen.</p>
+                  <ul>
+                        <li>"amd-ucode" für AMD CPUs</li>
+                        <li>"intel-ucode" für Intel CPUs</li>
+                        <li>Mehr Informationen: <a class="linko" href="https://wiki.archlinux.org/index.php/Microcode">https://wiki.archlinux.org/index.php/Microcode</a></li>
+                </ul>
+
+<h2 style="margin-top: 5px;" class="head">Filesystem table</h2>
+<p class="text" style="margin-right: 30px !important">Das wird jetzt alle Partitionen und Mount Points in einer Datei speichern.</p>
+<p class="code" style="margin-right: 30px !important">genfstab -U /mnt >> /mnt/etc/fstab</p>
+
+<h2 style="margin-top: 5px;" class="head">Change root</h2>
+<p class="text" style="margin-right: 30px !important">Nachdem du diesen Befehl ausgeführt hast, bist du sozusagen im gerade installierem System.</p>
+<p class="code" style="margin-right: 30px !important">arch-chroot /mnt</p>
+
+<h2 style="margin-top: 30px;" class="subhead">4. Bootloader installieren</h2>
+<p class="text" style="margin-right: 30px !important">▶️ UEFI</p>
+<p class="code" style="margin-right: 30px !important">pacman -S grub os-prober efibootmgr dosfstools mtools gptfdisk fatresize</p>
+<p class="code" style="margin-right: 30px !important">grub-install --target=x86_64-efi --bootloader-id=grub_uefi --efi-directory=/boot/efi --recheck</p>
+<p class="code" style="margin-right: 30px !important">grub-mkconfig -o /boot/grub/grub.cfg</p>
+<p class="text" style="margin-right: 30px !important">▶️ BIOS</p>
+<p class="code" style="margin-right: 30px !important">pacman -S grub os-prober</p>
+<p class="code" style="margin-right: 30px !important">grub-install --target=i386-pc --recheck /dev/sdX</p>
+<p class="code" style="margin-right: 30px !important">grub-mkconfig -o /boot/grub/grub.cfg</p>
+
+<h2 style="margin-top: 30px;" class="subhead">5. Das System einrichten</h2>
+<h2 style="margin-top: 30px;" class="head">Nano Text Editor</h2>
+<p class="text" style="margin-right: 30px !important">Nano ist der meistbenutzte Text-Editor im Terminal auf Linux. Natürlich werden wir dann hier auch diesen benutzen. Die wichtigsten Infos:</p>
+<ul>
+      <li>Man bewegt sich mit den Pfeiltasten ⬆ ➡ ⬅ ⬇</li>
+      <li>CTRL + W und dann ENTER ⤴ um zu speichern</li>
+      <li>CTRL + X um Nano zu verlassen</li>
+      <li>CTRL + X, Y und dann ENTER ⤴ um zu speichern und zu verlassen.</li>
+</ul>
+<h2 style="margin-top: 30px;" class="head">Hostname einrichten</h2>
+<p class="text" style="margin-right: 30px !important">📛 Dieser Name wird z.B. in deinem Netzwerk sichtbar sein. (myhostname könnt ihr dann mit eurem Hostname ersetzen z.B. linux)</p>
+<p class="code" style="margin-right: 30px !important">echo myhostname > /etc/hostname</p>
+<p class="code" style="margin-right: 30px !important">nano /etc/hosts</p>
+<p class="text" style="margin-right: 30px !important">Und fügt diese Zeilen hinzu: (P.S. Mit TAB könnt ihr das alignen)</p>
+<p class="code" style="margin-right: 30px !important">127.0.0.1       localhost</p>
+<p class="code" style="margin-right: 30px !important">::1             localhost</p>
+<p class="code" style="margin-right: 30px !important">127.0.1.1       myhostname.localdomain     myhostname</p>
+
+<h2 style="margin-top: 30px;" class="head">locale einrichten</h2>
+<p class="text" style="margin-right: 30px !important">🌐 Unkommentier (entfern das # bevor der Zeile) alle Sprachen die du brauchst</p>
+<p class="code" style="margin-right: 30px !important">nano /etc/locale.gen</p>
+<p class="text" style="margin-right: 30px !important">🏁 Die locales generieren</p>
+<p class="code" style="margin-right: 30px !important">locale-gen</p>
+<p class="text" style="margin-right: 30px !important">🔘 locales setzen</p>
+<p class="code" style="margin-right: 30px !important">echo LANG=en_US.UTF-8 > /etc/locale.conf</p>
+<p class="code" style="margin-right: 30px !important">export LANG=en_US.UTF-8</p>
+<p class="text" style="margin-right: 30px !important">⌨️ Dein Keyboardlayout setzen (ersetz "yourkeymap" mit deinem z.B. de-latin1)</p>
+<p class="code" style="margin-right: 30px !important">echo KEYMAP=yourkeymap > /etc/vconsole.conf</p>
+
+<h2 style="margin-top: 30px;" class="head">Uhrzeit & Datum einrichten</h2>
+<p class="text" style="margin-right: 30px !important">📅 Du kannst alles nach /zoneinfo mit TAB vervollständigen.</p>
+<p class="code" style="margin-right: 30px !important">ln -sf /usr/share/zoneinfo/Region/City /etc/localtime</p>
+<p class="code" style="margin-right: 30px !important">hwclock --systohc --utc</p>
+
+<h2 style="margin-top: 30px;" class="head">pacman einrichten</h2>
+<p class="text" style="margin-right: 30px !important">Pacman Konfigurationdatei bearbeiten</p>
+<p class="code" style="margin-right: 30px !important">nano /etc/pacman.conf</p>
+<p class="text" style="margin-right: 30px !important">👾 multilib is a repository which contains 32-bit libraries and is disabled by default (needed for some games & software; highly recommended to enable)</p>
+<p class="text" style="margin-right: 30px !important">💥 Uncomment (remove the # in front of) the following lines</p>
+<p class="code" style="margin-right: 30px !important">[multilib]</p>
+<p class="code" style="margin-right: 30px !important">Include = /etc/pacman.d/mirrorlist</p>
+
+<p class="text" style="margin-right: 30px !important">🍬 If you want some extra candy you can uncomment "Color" and "VerbosePkgLists" and add "ILoveCandy" under "Misc options".</p>
+
+<p class="text" style="margin-right: 30px !important">Reload Pacman</p>
+<p class="code" style="margin-right: 30px !important">pacman -Syu</p>
+
+<h2 style="margin-top: 30px;" class="subhead">6. Benutzer erstellen und einrichten</h2>
+<h2 style="margin-top: 30px;" class="head">Das Root Passwort festlegen</h2>
+<p class="text" style="margin-right: 30px !important">🔑 Empfehlenswert ist ein starkes und langes Passwort. Dieses Passwort ist wichtig zu wissen, aber muss nicht immer genutzt werden.</p>
+<p class="code" style="margin-right: 30px !important">passwd</p>
+<h2 style="margin-top: 30px;" class="head">Den Benutzer anlegen</h2>
+<p class="text" style="margin-right: 30px !important">🧑 Das wird der Benutzer in welchen du dich später anmelden wirst.</p>
+<p class="code" style="margin-right: 30px !important">useradd -m -G users,wheel,sys,log,network,rfkill,lp,adm -s /bin/bash yourusername</p>
+<p class="code" style="margin-right: 30px !important">passwd yourusername</p>
+<p class="text" style="margin-right: 30px !important">🎰 Wenn du dein Passwort nach erstem Login den Benutzer auffordern möchtest, sein Passwort anzulegen.</p>
+<p class="code" style="margin-right: 30px !important">chage -d 0 yourusername</p>
+<p class="text" style="margin-right: 30px !important">🤝 Das wird deinem Benutzer Admin Rechte geben</p>
+<p class="code" style="margin-right: 30px !important">EDITOR=nano visudo</p>
+<p class="text" style="margin-right: 30px !important">💥 Unkommentier folgene Zeile</p>
+<p class="code" style="margin-right: 30px !important">%wheel ALL=(ALL) ALL</p>
+
+<h2 style="margin-top: 30px;" class="subhead">7. Desktop installieren</h2>
+<h2 style="margin-top: 30px;" class="head">Display Server</h2>
+<p class="text" style="margin-right: 30px !important">⚠️ Ein Display Server ist aufjedenfall zu empfehlen! In unserem Beispiel benutzen wir Xorg.</p>
+<p class="code" style="margin-right: 30px !important">pacman -S xorg-server xorg-xinit xorg-xrandr xorg-xfontsel xorg-xkill</p>
+
+<h2 style="margin-top: 30px;" class="head">Desktop Environment</h2>
+<p class="text" style="margin-right: 30px !important">🗔 You need to select a desktop environment</p>
+
+<ul>
+      <li>Für Einsteiger die von Windows kommen, empfehle ich KDE Plasma oder Cinnamon</li>
+      <li>Für ein sehr Resourcenfreundlichen Desktop, würde ich XFCE oder LXQt empfehlen</li>
+      <li>Die KDE Installation ist getestet, da D3SOX diese benutzt und da ich GNOME benutze, ist GNOME auch getestet. Andere sollten aber auch funktionieren.</li>
+
+</ul>
+
+<p class="head" style="margin-right: 30px !important">🦶 Gnome</p>
+<p class="code" style="margin-right: 30px !important">pacman -S gnome gnome-extra</p>
+<p class="text" style="margin-right: 30px !important">Mehr Informationen <a href="https://wiki.archlinux.org/index.php/GNOME" class="linko">https://wiki.archlinux.org/index.php/GNOME</a></p>
+
+<p class="head" style="margin-right: 30px !important">🔮 KDE Plasma</p>
+<p class="code" style="margin-right: 30px !important">pacman -S plasma kdialog packagekit-qt5 kcalc konsole dolphin kdegraphics-thumbnailers ffmpegthumbs kdenetwork-filesharing gwenview ark kate okular kcron kdf filelight print-manager kdeconnect sshfs</p>
+<p class="text" style="margin-right: 30px !important">Mehr Informationen <a href="https://wiki.archlinux.org/index.php/KDE" class="linko">https://wiki.archlinux.org/index.php/KDE</a></p>
+
+<p class="head" style="margin-right: 30px !important">Xfce</p>
+<p class="code" style="margin-right: 30px !important">pacman -S xfce4 xfce4-goodies</p>
+<p class="text" style="margin-right: 30px !important">Mehr Informationen <a href="https://wiki.archlinux.org/index.php/xfce" class="linko">https://wiki.archlinux.org/index.php/xfce</a></p>
+
+<p class="head" style="margin-right: 30px !important">Cinnamon</p>
+<p class="code" style="margin-right: 30px !important">pacman -S cinnamon cinnamon-translations nemo-fileroller nemo-image-converter nemo-preview xed xreader gnome-terminal metacity gnome-shell</p>
+<p class="text" style="margin-right: 30px !important">Mehr Informationen <a href="https://wiki.archlinux.org/index.php/Cinnamon" class="linko">https://wiki.archlinux.org/index.php/Cinnamon</a></p>
+
+<p class="head" style="margin-right: 30px !important">LXQt</p>
+<p class="code" style="margin-right: 30px !important">pacman -S lxqt breeze-icons pcmanfm-qt qterminal lxqt-sudo polkit-qt5</p>
+<p class="text" style="margin-right: 30px !important">Mehr Informationen <a href="https://wiki.archlinux.org/index.php/LXQt" class="linko">https://wiki.archlinux.org/index.php/lxqt</a></p>
+
+<p class="head" style="margin-right: 30px !important">LXDE</p>
+<p class="code" style="margin-right: 30px !important">pacman -S lxde lxdm-gtk3</p>
+<p class="text" style="margin-right: 30px !important">Mehr Informationen <a href="https://wiki.archlinux.org/index.php/lxde" class="linko">https://wiki.archlinux.org/index.php/lxde</a></p>
+
+<p class="head" style="margin-right: 30px !important">Budgie</p>
+<p class="code" style="margin-right: 30px !important">pacman -S budgie-desktop network-manager-applet gnome</p>
+<p class="text" style="margin-right: 30px !important">Mehr Informationen <a href="https://wiki.archlinux.org/index.php/budgie" class="linko">https://wiki.archlinux.org/index.php/budgie</a></p>
+
+<p class="head" style="margin-right: 30px !important">Deepin</p>
+<p class="code" style="margin-right: 30px !important">pacman -S deepin deepin-extra</p>
+<p class="code" style="margin-right: 30px !important">nano /etc/lightdm/lightdm.conf</p>
+<p class="code" style="margin-right: 30px !important">greeter-session=lightdm-deepin-greeter</p>
+<p class="text" style="margin-right: 30px !important">Mehr Informationen <a href="https://wiki.archlinux.org/index.php/deepin" class="linko">https://wiki.archlinux.org/index.php/deepin</a></p>
+
+<p class="head" style="margin-right: 30px !important">Mate</p>
+<p class="code" style="margin-right: 30px !important">pacman -S xfce4 xfce4-goodies</p>
+<p class="text" style="margin-right: 30px !important">Mehr Informationen <a href="https://wiki.archlinux.org/index.php/mate" class="linko">https://wiki.archlinux.org/index.php/mate</a></p>
+
+
+
+<h2 style="margin-top: 30px;" class="head">Display Manager (Desktop Manager)</h2>
+<p class="text" style="margin-right: 30px !important">🖥️ Das ist grobgesehen dein Loginfenster, und da kannst du auch dein Desktop wechseln.</p>
+<p class="text" style="margin-right: 30px !important">⚠️ Vergesst aufjedenfall nicht hier eins zu installieren, oder wenn es schon mitdabei war, dann es zu aktivieren (z.B. systemctl enable gdm), sonst werdet ihr nach dem Neustart nicht mit eurem Desktop begrüßt!</p>
+<p class="head" style="margin-right: 30px !important">GDM (Included with GNOME/Budgie/MATE)</p>
+<p class="code" style="margin-right: 30px !important">pacman -S gdm</p>
+<p class="code" style="margin-right: 30px !important">systemctl enable gdm</p>
+<p class="text" style="margin-right: 30px !important">Mehr Informationen <a href="https://wiki.archlinux.org/index.php/GDM" class="linko">https://wiki.archlinux.org/index.php/GDM</a></p>
+
+<p class="head" style="margin-right: 30px !important">SDDM (Included in KDE Plasma)</p>
+<p class="code" style="margin-right: 30px !important">pacman -S sddm</p>
+<p class="code" style="margin-right: 30px !important">systemctl enable sddm</p>
+<p class="text" style="margin-right: 30px !important">Mehr Informationen <a href="https://wiki.archlinux.org/index.php/SDDM" class="linko">https://wiki.archlinux.org/index.php/sddm</a></p>
+
+<p class="head" style="margin-right: 30px !important">LightDM</p>
+<p class="code" style="margin-right: 30px !important">pacman -S lightdm lightdm-gtk-greeter</p>
+<p class="code" style="margin-right: 30px !important">systemctl enable lightdm</p>
+<p class="text" style="margin-right: 30px !important">Mehr Informationen <a href="https://wiki.archlinux.org/index.php/LightDM" class="linko">https://wiki.archlinux.org/index.php/lightdm</a></p>
+
+<p class="head" style="margin-right: 30px !important">LXDM (Included in LXDE)</p>
+<p class="code" style="margin-right: 30px !important">pacman -S lxdm-gtk3</p>
+<p class="code" style="margin-right: 30px !important">systemctl enable lxdm</p>
+<p class="text" style="margin-right: 30px !important">Mehr Informationen <a href="https://wiki.archlinux.org/index.php/LXDM" class="linko">https://wiki.archlinux.org/index.php/LXDM</a></p>
+
+
+<h2 style="margin-top: 30px;" class="subhead">8. Brauchbare Pakete</h2>
+<h2 class="head" style="margin-right: 30px !important">Hauptpakete</h2>
+<p class="code" style="margin-right: 30px !important">pacman -S linux-headers linux-lts-headers dkms jshon expac git wget acpid avahi net-tools xdg-user-dirs</p>
+<p class="code" style="margin-right: 30px !important">systemctl enable acpid avahi-daemon systemd-timesyncd</p>
+
+<p class="text" style="margin-right: 30px !important">Wenn das System auf einer SSD läuft</p>
+<p class="code" style="margin-right: 30px !important">systemctl enable fstrim.timer</p>
+
+<h2 class="head" style="margin-right: 30px !important">Codecs</h2>
+<p class="code" style="margin-right: 30px !important">pacman -S gst-libav gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gstreamer-vaapi gst-transcoder x265 x264 lame</p>
+
+<h2 class="head" style="margin-right: 30px !important">Drucker Support</h2>
+<p class="text" style="margin-right: 30px !important">🖨️ Wichtige Pakete für drucken und scannen</p>
+
+<p class="head" style="margin-right: 30px !important">Hauptpakete</p>
+<p class="code" style="margin-right: 30px !important">pacman -S system-config-printer foomatic-db foomatic-db-engine gutenprint gsfonts cups cups-pdf cups-filters sane</p>
+<p class="code" style="margin-right: 30px !important">systemctl enable org.cups.cupsd.service saned.socket</p>
+
+<p class="head" style="margin-right: 30px !important">Qt Scan App</p>
+<p class="text" style="margin-right: 30px !important">Benutz diese, wenn du z.B. KDE oder LXQt benutzt.</p>
+<p class="code" style="margin-right: 30px !important">pacman -S skanlite</p>
+
+<p class="head" style="margin-right: 30px !important">GTK Scan App</p>
+<p class="text" style="margin-right: 30px !important">Benutz das falls du einen anderen Desktop benutzt.</p>
+<p class="code" style="margin-right: 30px !important">pacman -S simple-scan</p>
+
+<p class="head" style="margin-right: 30px !important">HP Drucker UI</p>
+<p class="text" style="margin-right: 30px !important">🖨 Installier das, wenn du einen HP Drucker hast</p>
+<p class="code" style="margin-right: 30px !important">pacman -S hplip</p>
+
+<h2 class="head" style="margin-right: 30px !important">Bluetooth support</h2>
+<p class="text" style="margin-right: 30px !important">🔵 Paar benötigte Pakete für eine vernünftigen bluetooth support</p>
+<p class="code" style="margin-right: 30px !important">pacman -S bluez bluez-utils</p>
+<p class="code" style="margin-right: 30px !important">systemctl enable bluetooth</p>
+
+<h2 class="head" style="margin-right: 30px !important">Input Treiber</h2>
+<p class="text" style="margin-right: 30px !important">Schadet nicht</p>
+<p class="code" style="margin-right: 30px !important">pacman -S xf86-input-synaptics xf86-input-libinput xf86-input-evdev</p>
+
+<p class="text" style="margin-right: 30px !important">Treiber falls man in einer Virtuellen Maschine installiert</p>
+<p class="code" style="margin-right: 30px !important">pacman -S xf86-input-vmmouse</p>
+
+<h2 class="head" style="margin-right: 30px !important">Grafiktreiber</h2>
+
+<p class="head" style="margin-right: 30px !important">Mesa</p>
+<p class="text" style="margin-right: 30px !important">Die sind nutzvoll für alle GPUs</p>
+<p class="code" style="margin-right: 30px !important">pacman -S mesa lib32-mesa</p>
+
+<p class="head" style="margin-right: 30px !important">Vulkan</p>
+<p class="text" style="margin-right: 30px !important">Die sind nutzvoll für alle GPUs</p>
+<p class="code" style="margin-right: 30px !important">pacman -S vulkan-icd-loader lib32-vulkan-icd-loader</p>
+
+<p class="head" style="margin-right: 30px !important">Nvidia Treiber</p>
+<p class="text" style="margin-right: 30px !important">Installier diese nur, wenn du eine Nvidia GPU hast.</p>
+<p class="code" style="margin-right: 30px !important">pacman -S nvidia nvidia-utils lib32-nvidia-utils</p>
+
+<p class="head" style="margin-right: 30px !important">AMD Grafiktreiber</p>
+<p class="text" style="margin-right: 30px !important">Installier diese nur, wenn du eine AMD GPU benutzen möchtest.</p>
+<p class="code" style="margin-right: 30px !important">pacman -S vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau amdvlk lib32-amdvlk</p>
+
+<p class="head" style="margin-right: 30px !important">Intel Grafiktreiber</p>
+<p class="text" style="margin-right: 30px !important">Installier diese nur, wenn du die Intel GPU benutzen möchtest.</p>
+<p class="code" style="margin-right: 30px !important">pacman -S vulkan-intel</p>
+
+<p class="head" style="margin-right: 30px !important">Gaming Pakete</p>
+<p class="text" style="margin-right: 30px !important">Die sind nutzvoll für "Gaming"</p>
+<p class="code" style="margin-right: 30px !important">pacman -S vkd3d lib32-vkd3d faudio lib32-faudio</p>
+
+<h2 class="head" style="margin-right: 30px !important">Netzwerk</h2>
+<p class="text" style="margin-right: 30px !important">🖧 Diese sind notwendige Netzwerk Tools</p>
+<p class="code" style="margin-right: 30px !important">pacman -S networkmanager networkmanager-openvpn networkmanager-pptp networkmanager-vpnc</p>
+<p class="code" style="margin-right: 30px !important">systemctl enable NetworkManager</p>
+
+<p class="text" style="margin-right: 30px !important">📶 Falls du WiFi auf deinem Rechner benutzen möchtest</p>
+<p class="code" style="margin-right: 30px !important">pacman -S wireless_tools wpa_supplicant ifplugd dialog</p>
+
+<h2 class="head" style="margin-right: 30px !important">Archive and file system utils</h2>
+<p class="text" style="margin-right: 30px !important">🗄️ Important tools for archives and file systems</p>
+<p class="code" style="margin-right: 30px !important">pacman -S p7zip unrar unarchiver unzip unace xz rsync nfs-utils cifs-utils ntfs-3g exfat-utils</p>
+
+<h2 class="head" style="margin-right: 30px !important">Sound</h2>
+<p class="text" style="margin-right: 30px !important">🔊 Essentials für Sound</p>
+<p class="code" style="margin-right: 30px !important">pacman -S alsa-utils pulseaudio-alsa pulseaudio-equalizer</p>
+
+<p class="text" style="margin-right: 30px !important">Control App for Qt Desktop (KDE Plasma or LXQt)</p>
+<p class="code" style="margin-right: 30px !important">pacman -S pavucontrol-qt</p>
+
+<p class="text" style="margin-right: 30px !important">Control app for GTK Desktop (another desktop environment)</p>
+<p class="code" style="margin-right: 30px !important">pacman -S pavucontrol</p>
+
+<h2 class="head" style="margin-right: 30px !important">Andere shells</h2>
+<p class="text" style="margin-right: 30px !important">🐚 Falls du etwas anderes benutzen möchtest, außer bash</p>
+<p class="head" style="margin-right: 30px !important">zsh (Z Shell)</p>
+<p class="code" style="margin-right: 30px !important">pacman -S zsh zsh-completions</p>
+<p class="code" style="margin-right: 30px !important">chsh -s /usr/bin/zsh yourusername</p>
+
+<p class="head" style="margin-right: 30px !important">fish (Friendly interactive shell)</p>
+<p class="code" style="margin-right: 30px !important">pacman -S fish</p>
+<p class="code" style="margin-right: 30px !important">chsh -s /usr/bin/fish yourusername</p>
+
+<h2 class="subhead" style="margin-right: 30px !important">10. Neustarten</h2>
+<p class="text" style="margin-right: 30px !important">Viel Glück 🥶</p>
+<p class="code" style="margin-right: 30px !important">exit</p>
+<p class="code" style="margin-right: 30px !important">umount -R /mnt</p>
+<p class="code" style="margin-right: 30px !important">telinit 6</p>
+<p class="text" style="margin-right: 30px !important">Jetzt solltest du in deinem Desktop sein. Öffne dein Terminal um fortzufahren.</p>
+
+<h2 class="subhead" style="margin-right: 30px !important">TODO!!!</h2>
+<img src="css/tenor.gif" width="20%">
+<p class="text" style="margin-right: 30px !important"><a class="linko" href="https://d3s0x.github.io/arch-installation/">https://d3s0x.github.io/arch-installation/</a></p>
+<p class="text" style="margin-right: 30px !important"><a class="linko" href="https://d3s0x.github.io/arch-installation/">https://d3s0x.github.io/arch-installation/</a></p>
+<p class="text" style="margin-right: 30px !important"><a class="linko" href="https://d3s0x.github.io/arch-installation/">https://d3s0x.github.io/arch-installation/</a></p>
+
+</div>
+<div class="content">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="header">
+
+    <div class="content" >
+
+        <h4 class="captioN"></span>
+        </h4>
+<div style="text-align: center;">
+        <h1 style="margin-top: -20px;" class="subtitle">Arch Linux Installation</h1>
+        <h1 style="margin-top: -10px;" class="text">Forked from <a class="linko" href="https://d3s0x.icu">D3SOX</a> | Website made by <a class="linko" href="https://flsmee.github.io/arch">flsmee</a> | hier war <a class="linko" href="#">Mythos</a></h1>
+        <br><br>
+</div>
+    </div>
+</html>
